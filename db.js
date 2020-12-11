@@ -13,11 +13,11 @@ const postgrePool = new Pool({
 });
 
 function getPlaces() {
-    return postgrePool.query("SELCECT * FROM mynearbyplaces.place;").then(x => x.rows);
+    return postgrePool.query("SELECT * FROM mynearbyplaces.place;").then(x => x.rows);
 }
 
 function getReviews(id) {
-    return postgrePool.query("SELECT * FROM mynearbyplaces.review WHERE placeid = $1;", [id])
+    return postgrePool.query("SELECT * FROM mynearbyplaces.review WHERE placeid = $1;", [id]).then(x => x.rows);
 }
 
 function addPlace(name, category, city, state) {
@@ -25,8 +25,8 @@ function addPlace(name, category, city, state) {
     [name, category, city, state])
 }
 
-function addReview(id) {
-
+function addReview(id, review) {
+    return postgrePool.query("INSERT INTO mynearbyplaces.review (placeid, review) VALUES ($1, $2);", [id, review]);
 }
 
 module.exports = { getPlaces, getReviews, addPlace, addReview }

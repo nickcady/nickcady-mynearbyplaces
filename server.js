@@ -1,7 +1,7 @@
 const express = require('express');
 var cors = require('cors');
 var db = require("./db");
-const { response } = require('express');
+const { response, request } = require('express');
 
 const app = express();
 const port = process.env.PORT || 3001;
@@ -16,23 +16,23 @@ app.get('/places', (request, response) => {
     db.getPlaces().then(x => response.json(x));
 })
 
-app.get('/quiz/:id', (request, response) => {
+app.get('/reviews/:id', (request, response) => {
     let requestId = request.params.id;
-    let found = data.quizzes.find(x => x.id === Number(requestId));
-    if (found) {
-        response.json(found.questions);
-    }
-    else {
-        response.status(404).json({error: `The quiz with id ${requestId} was not found`});
-    }
+    db.getReviews(requestId).then(x => response.json(x));
 });
 
-app.post('/score', (request, response) => {
-    let username = request.body.username;
-    let quizid = request.body.quizid;
-    let score = request.body.score;
-    data.scores.push({score: score, quizid: quizid, username: username});
-    response.json({message: 'the score was added successfully.'});
+app.post('/addplace', (request, response) => {
+    let name = request.body.name;
+    let category = request.body.category;
+    let city = request.body.city;
+    let state = request.body.state;
+    db.addPlace(name, category, city, state).then(x => response.json({message: "Place Added!"}));
+});
+
+app.post('/addreview', (request, response) => {
+    let placeid = request.body.placeid;
+    let review = request.body.review;
+    db.addReview(placeid, review).then(x => response.json({message: "Review Added!"}));
 })
 
 app.listen(port, () => {
