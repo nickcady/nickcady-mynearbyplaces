@@ -1,6 +1,6 @@
 const express = require('express');
 var cors = require('cors');
-var data = require('./data');
+var db = require("./db");
 const { response } = require('express');
 
 const app = express();
@@ -9,14 +9,11 @@ const port = process.env.PORT || 3001;
 app.use(cors());
 
 app.get('/', (request, response) => {
-    response.send('Welcome to Image Quiz API');
+    response.send('Welcome to mynearbyplaces API');
 })
 
-app.get('/quizzes', (request, response) => {
-    let metadata = data.quizzes.map(x => {
-        return {id: x.id, title: x.title, picture: x.picture}
-    });
-    response.json(metadata);
+app.get('/places', (request, response) => {
+    db.getPlaces().then(x => response.json(x));
 })
 
 app.get('/quiz/:id', (request, response) => {
