@@ -17,7 +17,7 @@ app.get('/places', (request, response) => {
 })
 
 app.get('/reviews/:placeid', (request, response) => {
-    let requestId = request.params.id;
+    let requestId = request.params.placeid;
     db.getReviews(requestId).then(x => response.json(x));
 });
 
