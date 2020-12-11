@@ -29,4 +29,9 @@ function addReview(id, review) {
     return postgrePool.query("INSERT INTO mynearbyplaces.review (placeid, review) VALUES ($1, $2);", [id, review]);
 }
 
-module.exports = { getPlaces, getReviews, addPlace, addReview }
+function search(searchTerm, location) {
+    let thisquery = "SELECT * FROM mynearbyplaces.place where " + searchTerm +" ~* '" + location + "';";
+    return postgrePool.query(thisquery).then(x => x.rows);
+}
+
+module.exports = { getPlaces, getReviews, addPlace, addReview, search }

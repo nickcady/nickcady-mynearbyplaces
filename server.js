@@ -16,12 +16,18 @@ app.get('/places', (request, response) => {
     db.getPlaces().then(x => response.json(x));
 })
 
-app.get('/reviews/:id', (request, response) => {
+app.get('/reviews/:placeid', (request, response) => {
     let requestId = request.params.id;
     db.getReviews(requestId).then(x => response.json(x));
 });
 
-app.post('/addplace', (request, response) => {
+app.get('/search/:searchTerm/:location', (request, response) => {
+    let searchTerm = request.params.searchTerm;
+    let location = request.params.location;
+    db.search(searchTerm, location).then(x => response.json(x));
+})
+
+app.post('/place', (request, response) => {
     let name = request.body.name;
     let category = request.body.category;
     let city = request.body.city;
@@ -29,7 +35,7 @@ app.post('/addplace', (request, response) => {
     db.addPlace(name, category, city, state).then(x => response.json({message: "Place Added!"}));
 });
 
-app.post('/addreview', (request, response) => {
+app.post('/review', (request, response) => {
     let placeid = request.body.placeid;
     let review = request.body.review;
     db.addReview(placeid, review).then(x => response.json({message: "Review Added!"}));
