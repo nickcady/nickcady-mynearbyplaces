@@ -36,6 +36,7 @@ app.post('/place', (request, response) => {
 });
 
 app.post('/review', (request, response) => {
+    console.log(request.body);
     let placeid = request.body.placeid;
     let review = request.body.review;
     db.addReview(placeid, review).then(x => response.json({message: "Review Added!"}));

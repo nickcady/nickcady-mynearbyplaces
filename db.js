@@ -26,8 +26,8 @@ function addPlace(name, category, city, state) {
 }
 
 function addReview(id, review) {
-    // let thisquery = "INSERT INTO mynearbyplaces.review (placeid, review) VALUES ('" + id + "', '"+ review + "');";
-    return postgrePool.query("INSERT INTO mynearbyplaces.review (placeid, review) VALUES ($1, '$2');", [id, review]).then(x => x.rows);
+    let thisquery = "INSERT INTO mynearbyplaces.review (placeid, review) VALUES (" + id + ", '" + review + "');"
+    return postgrePool.query(thisquery).then(x => x.rows);
 }
 
 function search(searchTerm, location) {
