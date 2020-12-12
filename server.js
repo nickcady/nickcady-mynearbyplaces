@@ -1,13 +1,12 @@
 const express = require('express');
 var cors = require('cors');
 var db = require("./db");
-const { response, request } = require('express');
-
+var bodyParser = require("body-parser")
 const app = express();
 const port = process.env.PORT || 3001;
 
 app.use(cors());
-
+app.use(bodyParser.json());
 app.get('/', (request, response) => {
     response.send('Welcome to mynearbyplaces API');
 })
@@ -28,6 +27,7 @@ app.get('/search/:searchTerm/:location', (request, response) => {
 })
 
 app.post('/place', (request, response) => {
+    console.log(request.body);
     let name = request.body.name;
     let category = request.body.category;
     let city = request.body.city;

@@ -22,12 +22,12 @@ function getReviews(id) {
 
 function addPlace(name, category, city, state) {
     let thisquery = "INSERT INTO mynearbyplaces.place (place, category, city, state) VALUES ('" + name + "', '" + category + "', '" + city + "', '" + state + "');"
-    return postgrePool.query(thisquery);
+    return postgrePool.query(thisquery).then(x => x.rows);
 }
 
 function addReview(id, review) {
     // let thisquery = "INSERT INTO mynearbyplaces.review (placeid, review) VALUES ('" + id + "', '"+ review + "');";
-    return postgrePool.query("INSERT INTO mynearbyplaces.review (placeid, review) VALUES ($1, '$2');", [id, review]);
+    return postgrePool.query("INSERT INTO mynearbyplaces.review (placeid, review) VALUES ($1, '$2');", [id, review]).then(x => x.rows);
 }
 
 function search(searchTerm, location) {
