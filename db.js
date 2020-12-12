@@ -21,8 +21,8 @@ function getReviews(id) {
 }
 
 function addPlace(name, category, city, state) {
-    return postgrePool.query("INSERT INTO mynearbyplaces.place (place, category, city, state) VALUES ('$1', '$2', '$3', '$4');",
-    [name, category, city, state])
+    let thisquery = "INSERT INTO mynearbyplaces.place (place, category, city, state) VALUES ('" + name + "', '" + category + "', '" + city + "', '" + state + "');"
+    return postgrePool.query(thisquery);
 }
 
 function addReview(id, review) {
